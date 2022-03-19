@@ -188,8 +188,6 @@ class Function:
 
             result += new_term
 
-        print(result)
-
         return result
 
     def hermite_polynomial(self, x: float, nodes_to_use: int) -> Polynomial:
@@ -206,23 +204,28 @@ class Function:
 
             result += new_term
 
-        print(result)
-
         return result
 
 
 def main():
     nodes = []
+    value = 0.525
 
     for x, y, der in zip(xVector, yVector, yDerVector):
         nodes.append(Node(x, y, der))
 
     to_approximate = Function(nodes)
-    newton = to_approximate.newton_polynomial(0.6, 4)
-    hermit = to_approximate.hermite_polynomial(0.6, 3)
 
-    print(f"RESULT: {newton.y(0.6)}")
-    print(f"RESULT: {hermit.y(0.6)}")
+    for i in range(5):
+        newton = to_approximate.newton_polynomial(value, i + 1)
+        hermit = to_approximate.hermite_polynomial(value, i + 1)
+
+        print(f"NEWTON POLYNOMIAL: {newton}")
+        print(f"NEWTON\tPOWER = {i + 1}\tX = {value}\tY = {newton.y(value)}")
+
+        print(f"HERMITE POLYNOMIAL: {hermit}")
+        print(f"HERMITE\tNODES = {i + 1}\tX = {value}\tY = {hermit.y(value)}")
+        print()
 
 
 if __name__ == '__main__':
