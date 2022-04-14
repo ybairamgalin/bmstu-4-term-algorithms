@@ -58,7 +58,7 @@ class Polynomial:
             return "Empty"
 
         for i in range(len(self.coefficients) - 1):
-            result += f"({round(self.coefficients[len(self.coefficients) - 1 - i], 3)}) * x ^ " \
+            result += f"({round(self.coefficients[len(self.coefficients) - 1 - i], 3)})x ^ " \
                       f"{len(self.coefficients) - 1 - i} + "
 
         result += f"({round(self.coefficients[0], 3)})"
@@ -226,6 +226,17 @@ def main():
         print(f"HERMITE POLYNOMIAL: {hermit}")
         print(f"HERMITE\tNODES = {i + 1}\tX = {value}\tY = {hermit.y(value)}")
         print()
+
+    nodes_reversed = []
+
+    for x, y, der in zip(xVector, yVector, yDerVector):
+        nodes_reversed.append(Node(y, x, der))
+
+    to_approximate_reversed = Function(nodes_reversed)
+    newton_reversed = to_approximate_reversed.newton_polynomial(0, 5)
+
+    print(f"NEWTON POLYNOMIAL REVERSED: {newton_reversed}")
+    print(f"NEWTON\tPOWER = {5}\tY = {0}\tX = {newton_reversed.y(0)}")
 
 
 if __name__ == '__main__':
